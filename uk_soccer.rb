@@ -3,13 +3,13 @@ require 'open-uri'
 class UkSoccer
 
     attr_reader :url, :group_array
-    attr_accessor :file, :team, :group
+    attr_accessor :file, :team, :groups
 
     def initialize(url = 'https://gist.githubusercontent.com/neerajdotname/32f984f7f270876e5431185c4ebab1df/raw/b8fac78e118e7699f309e37d8a826d08eca4a702/uk-soccer-team.txt')
         @url = url
         @team = []
         @group_array = ["Group A", "Group B", "Group C", "Group D", "Group E"]
-        @group= {}
+        @groups = {}
     end
 
     def open_file
@@ -87,14 +87,14 @@ class UkSoccer
         i = 0
         self.team.each do |team|
 
-            if self.group.length > 0
-                if( self.group.has_key?(self.group_array[i].to_sym) )
-                    self.group[self.group_array[i].to_sym].push(team.keys.join(''))  
+            if self.groups.length > 0
+                if( self.groups.has_key?(self.group_array[i].to_sym) )
+                    self.groups[self.group_array[i].to_sym].push(team.keys.join(''))  
                 else              
-                    self.group[self.group_array[i].to_sym]= [team.keys.join('')]              
+                    self.groups[self.group_array[i].to_sym]= [team.keys.join('')]              
                 end
             else
-                self.group[self.group_array[i].to_sym]= [team.keys.join('')]
+                self.groups[self.group_array[i].to_sym]= [team.keys.join('')]
             end
 
             i = i != self.group_array.length-1 ? i+1 : 0
@@ -102,14 +102,21 @@ class UkSoccer
     end
 
     def log_analysis
-        
+        self.groups.each do |key, value|
+            puts key
+            puts "==========="
+            value.each do |team|
+                puts team
+            end
+            puts
+        end
     end
 
     def analyze
         prepare_data
         sort_team_by_points
         group_by_team
-        puts self.group
+        log_analysis
     end
 
 end
