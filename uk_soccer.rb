@@ -9,6 +9,7 @@ class UkSoccer
         @url = url
         @team = []
         @group_array = ["Group A", "Group B", "Group C", "Group D", "Group E"]
+        @group= {}
     end
 
     def open_file
@@ -83,13 +84,32 @@ class UkSoccer
     end
 
     def group_by_team
-        puts self.group_array
+        i = 0
+        self.team.each do |team|
+
+            if self.group.length > 0
+                if( self.group.has_key?(self.group_array[i].to_sym) )
+                    self.group[self.group_array[i].to_sym].push(team.keys.join(''))  
+                else              
+                    self.group[self.group_array[i].to_sym]= [team.keys.join('')]              
+                end
+            else
+                self.group[self.group_array[i].to_sym]= [team.keys.join('')]
+            end
+
+            i = i != self.group_array.length-1 ? i+1 : 0
+        end
+    end
+
+    def log_analysis
+        
     end
 
     def analyze
         prepare_data
         sort_team_by_points
         group_by_team
+        puts self.group
     end
 
 end
