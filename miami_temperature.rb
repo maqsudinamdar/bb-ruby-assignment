@@ -22,9 +22,6 @@ class MiamiTemperature
         self.file.read.split("\n")
     end
 
-    def remodeling_data(line)
-    end
-
     def is_number(string)
         true if Integer(string) rescue false
     end
