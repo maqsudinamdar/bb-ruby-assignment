@@ -16,10 +16,14 @@ class FindTarget
         puts
     end
 
+    def update_index(i)
+        self.index[self.array[i]] = i if self.index[self.array[i]].nil?
+    end
+
     def solve
         for i in 0...self.array.length do
 
-            self.index[self.array[i]] = i if self.index[self.array[i]].nil?
+            update_index(i)
 
             if self.array[i] < self.target
                 if !self.dp[self.array[i]].nil?
